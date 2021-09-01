@@ -36,7 +36,7 @@ const QRCode: React.VFC<Props> = ({ data, className }) => {
 
   return (
     <div className={clsx(classes.root, className)}>
-      {dataUrl && <img src={dataUrl} alt={data} width="100%" />}
+      {dataUrl && <img src={dataUrl} alt={data} width="100%" height="auto" />}
     </div>
   );
 };

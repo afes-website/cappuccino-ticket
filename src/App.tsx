@@ -63,7 +63,7 @@ const App: React.VFC = () => {
     };
   }, []);
 
-  if (rsvId == null) {
+  if (!rsvId) {
     return (
       <div className={classes.root}>
         <p className={classes.rsvIdNotSet}>予約 ID が指定されていません。</p>
