@@ -1,0 +1,22 @@
+// Inter Regular 400 Medium 500 Bold 700
+// Roboto Mono 500
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Roboto+Mono:wght@500&display=swap');
+
+
+body {
+  font-family: Inter, sans-serif;
+  max-width: 400px;
+  width: 100%;
+  margin: 0 auto;
+  height: var(--100vh, 0px);
+}
+
+#root {
+  height: 100%;
+}
+
+p {
+  font-size: 14px;
+  margin-block-start: 12px;
+  margin-block-end: 12px;
+}
