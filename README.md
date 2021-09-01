@@ -1,46 +1,33 @@
-# Getting Started with Create React App
+# CAPPUCCINO ticket
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+***C**ontrol **APP**lication for **U**nited **C**ontactless **C**heck-**IN** **O**peration*
 
-## Available Scripts
+![ver](https://img.shields.io/github/package-json/v/afes-website/cappuccino-ticket?style=for-the-badge)
 
-In the project directory, you can run:
+![[deploy] ticket.afes.info](https://img.shields.io/github/workflow/status/afes-website/cappuccino-ticket/Deploy%20to%20server?label=%5Bdeploy%5D%20ticket.afes.info&style=flat-square)
 
-### `yarn start`
+[![@afes-website/docs](https://img.shields.io/badge/@afes--website/docs-v3.2.0-555.svg?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxODAgMTgwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9PC9zdHlsZT48L2RlZnM+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTM0LjYsODkuNzIsMTU2LjksNTEuMUgxMTJMOTAsMTMsNjgsNTEuMUgyMy4xTDQ1LjQsODkuNzNsLTIyLjI5LDM4LjZINjcuNjhMOTAsMTY3bDIyLjMyLTM4LjY3SDE1Ni45Wm04LjUyLDI4LjM1TDk3LjQ5LDkxLjczaDMyLjQ1Wk0xMjkuOTMsODcuNzNIOTcuNDdsNDUuNjUtMjYuMzZaTTk1LjQ3LDg0LjI3LDExMS43LDU2LjE1bDI5LjQyLDEuNzVabTEyLjYtMjkuODRMOTIsODIuMjhWMzAuMDdaTTg4LDgyLjI1LDcxLjkyLDU0LjQyLDg4LDMwLjA2Wk02OC4zLDU2LjE1LDg0LjU0LDg0LjI2LDM4Ljg4LDU3LjkxWk0zNi44OCw2MS4zNyw4Mi41Myw4Ny43Mkg1MC4wNlpNNTAuMDcsOTEuNzJIODIuNTFMMzYuODksMTE4LjA3Wm0zNC40OSwzLjQ0TDY4LjMyLDEyMy4yOWwtMjkuNDMtMS43NlptLTEyLjgsMzAuMTdMODgsOTcuMjJ2NTIuNzFaTTkyLDk3LjIybDE2LjI0LDI4LjEyTDkyLDE0OS45NFptMTkuNjgsMjYuMDdMOTUuNDIsOTUuMTZsNDUuNywyNi4zN1oiLz48L3N2Zz4K&logoColor=fff&style=flat-square&labelColor=457fb3)](https://github.com/afes-website/docs/tree/v3.2.0)
+![ts](https://img.shields.io/badge/dynamic/json?color=555&label=TypeScript&labelColor=007ACC&logo=typescript&logoColor=fff&style=flat-square&query=devDependencies.typescript&url=https://raw.githubusercontent.com/afes-website/cappuccino-ticket/main/package.json)
+![React](https://img.shields.io/badge/dynamic/json?color=555&label=React&labelColor=282c34&logo=react&logoColor=61dafb&style=flat-square&query=dependencies.react&url=https://raw.githubusercontent.com/afes-website/cappuccino-ticket/main/package.json)
+![Material-UI](https://img.shields.io/badge/dynamic/json?color=555&label=Material-UI&labelColor=212121&logo=material-ui&logoColor=0081CB&style=flat-square&query=dependencies["@material-ui/core"]&url=https://raw.githubusercontent.com/afes-website/cappuccino-ticket/main/package.json)
+![ESLint](https://img.shields.io/badge/dynamic/json?color=555&label=ESLint&labelColor=fff&logo=eslint&logoColor=4B32C3&style=flat-square&query=devDependencies.eslint&url=https://raw.githubusercontent.com/afes-website/cappuccino-ticket/main/package.json)
+![Prettier](https://img.shields.io/badge/dynamic/json?color=555&label=Prettier&labelColor=1A2B34&logo=prettier&logoColor=F7B93E&style=flat-square&query=devDependencies.prettier&url=https://raw.githubusercontent.com/afes-website/cappuccino-ticket/main/package.json)
+<!--![aspida](https://img.shields.io/badge/-aspida-007acc.svg?logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2ODUg%0D%0ANjg1Ij48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9LmNscy0ye2ZpbGw6IzAwN2FjYzt9%0D%0APC9zdHlsZT48L2RlZnM+PGNpcmNsZSBjbGFzcz0iY2xzLTEiIGN4PSIzNDIuNSIgY3k9IjM0Mi41%0D%0AIiByPSIzNDIuNSIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIzNjcuMyA1MTcuOTkg%0D%0AOTAuMzggNTE3Ljk5IDIwNC40MiAxNjcuMDEgNDgxLjM1IDE2Ny4wMSA0NTQuNjYgMjQ5LjE0IDI1%0D%0AOS44NiAyNDkuMTQgMTk5LjE5IDQzNS44NiAzOTMuOTkgNDM1Ljg2IDM2Ny4zIDUxNy45OSIvPjxw%0D%0Ab2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSI0ODAuNTggNTE3Ljk5IDM5OC40NSA1MTcuOTkg%0D%0ANTEyLjUgMTY3LjAxIDU5NC42MyAxNjcuMDEgNDgwLjU4IDUxNy45OSIvPjwvc3ZnPg==&style=flat-square)-->
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Project setup
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```
+yarn install
+```
 
-### `yarn test`
+## Start development server
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+yarn start
+```
 
-### `yarn build`
+## Build for production
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+yarn build
+```
