@@ -4,7 +4,7 @@ import { Skeleton } from "@material-ui/lab";
 import clsx from "clsx";
 import api, { Reservation } from "@afes-website/docs";
 import aspida from "@aspida/axios";
-import { ReactComponent as LogoWhite } from "assets/logo_w.svg";
+import { ReactComponent as LogoWhite } from "assets/logo.svg";
 import { ReactComponent as Person } from "assets/person.svg";
 import { ReactComponent as Child } from "assets/child.svg";
 import QRCode from "components/QRCode";
@@ -44,6 +44,17 @@ const useStyles = makeStyles({
     top: 16,
     left: 16,
     height: 36,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    "& > svg": {
+      height: 36,
+      fill: "#fff",
+    },
+    "& > span": {
+      fontSize: 16,
+      paddingLeft: 8,
+    },
   },
   ticketHeaderContent: {
     display: "flex",
@@ -121,7 +132,10 @@ const Ticket: React.VFC<Props> = ({ rsvId, className }) => {
             background: termColor(rsv?.term.guest_type),
           }}
         >
-          <LogoWhite className={classes.ticketLogo} />
+          <div className={classes.ticketLogo}>
+            <LogoWhite />
+            <span>デジタルチケット</span>
+          </div>
           <span className={classes.ticketMemberAll}>
             {rsv && (rsv.member_all === 1 ? <Person /> : <Child />)}
           </span>
