@@ -49,7 +49,7 @@ const App: React.VFC = () => {
 
   useEffect(() => {
     const id = searchParams.current.get(SEARCH_PARAMS_RSV_KEY);
-    if (id) setRsvId(atob(decodeURIComponent(id)));
+    if (id) setRsvId(id);
     else setRsvId(null);
   }, [searchParams]);
 
