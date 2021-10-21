@@ -6,9 +6,9 @@ import api, { Reservation } from "@afes-website/docs";
 import aspida from "@aspida/axios";
 import { ReactComponent as LogoWhite } from "assets/logo_w.svg";
 import QRCode from "components/QRCode";
-import isAxiosError from "libs/isAxiosError";
 import { stringDate, stringTime } from "libs/stringDateTime";
 import termColor from "libs/termColor";
+import { getReservationFromLS, setReservationToLS } from "libs/localStorage";
 
 const useStyles = makeStyles({
   root: {
@@ -93,8 +93,7 @@ export interface Props {
 const Ticket: React.VFC<Props> = ({ rsvId, className }) => {
   const classes = useStyles();
 
-  const [rsv, setRsv] = useState<Reservation | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [rsv, setRsv] = useState<Reservation | null>(getReservationFromLS());
 
   useEffect(() => {
     api(aspida())
@@ -102,102 +101,67 @@ const Ticket: React.VFC<Props> = ({ rsvId, className }) => {
       .check.$get()
       .then(({ reservation }) => {
         setRsv(reservation);
+        setReservationToLS(reservation);
       })
       .catch((e) => {
-        if (isAxiosError(e)) {
-          if (e.response?.status) {
-            switch (e.response.status) {
-              case 404:
-                setError("予約が見つかりませんでした。");
-                break;
-              case 500:
-                setError("サーバーエラーです。");
-                break;
-              default:
-                setError("原因不明のエラーです。");
-            }
-          }
-        } else {
-          setError("原因不明のエラーです。");
-        }
+        console.error(e);
       });
   }, [rsvId]);
 
   return (
     <div className={clsx(classes.root, className)}>
       <div className={classes.ticket}>
-        {error ? (
-          <div className={classes.ticketError}>
-            <p>{error}</p>
-            <p>
-              問題が解決しない場合は、麻布学園文化祭予約担当までお問い合わせください。
-            </p>
-            <p>
-              メール: <span className="monospace">74afes@example.com</span>
-            </p>
-            <p>
-              予約 ID: <span className="monospace">{rsvId}</span>
-            </p>
+        <div
+          className={clsx(classes.ticketHeader, classes.cutLine)}
+          style={{
+            background: termColor(rsv?.term.guest_type),
+          }}
+        >
+          <LogoWhite className={classes.ticketLogo} />
+          <span className={classes.ticketMemberAll}>
+            {rsv && rsv.member_all}
+          </span>
+          <div className={classes.ticketHeaderContent}>
+            <span>
+              {rsv ? (
+                stringDate(rsv.term.enter_scheduled_time)
+              ) : (
+                <Skeleton width={180} height={36} />
+              )}
+            </span>
+            <span>
+              {rsv ? (
+                `${stringTime(rsv.term.enter_scheduled_time)} ～ ${stringTime(
+                  rsv.term.exit_scheduled_time
+                )}`
+              ) : (
+                <Skeleton width={180} height={36} />
+              )}
+            </span>
           </div>
-        ) : (
-          <>
-            <div
-              className={clsx(classes.ticketHeader, classes.cutLine)}
-              style={{
-                background: termColor(rsv?.term.guest_type),
-              }}
-            >
-              <LogoWhite className={classes.ticketLogo} />
-              <span className={classes.ticketMemberAll}>
-                {rsv && rsv.member_all}
-              </span>
-              <div className={classes.ticketHeaderContent}>
-                <span>
-                  {rsv ? (
-                    stringDate(rsv.term.enter_scheduled_time)
-                  ) : (
-                    <Skeleton width={180} height={36} />
-                  )}
-                </span>
-                <span>
-                  {rsv ? (
-                    `${stringTime(
-                      rsv.term.enter_scheduled_time
-                    )} ～ ${stringTime(rsv.term.exit_scheduled_time)}`
-                  ) : (
-                    <Skeleton width={180} height={36} />
-                  )}
-                </span>
-              </div>
-            </div>
-            <div className={classes.ticketBody}>
-              <Grid container spacing={2}>
-                <Grid item xs={6}>
-                  <QRCode data={rsvId} className={classes.qrCode} />
-                  <span className={clsx(classes.rsvId, "monospace")}>
-                    {rsvId}
-                  </span>
-                </Grid>
-                <Grid item xs={6}>
-                  <p>
-                    {rsv ? (
-                      `上記の日時・時間に、${rsv.member_all} 名までご入場いただけます。`
-                    ) : (
-                      <>
-                        <Skeleton height={21} />
-                        <Skeleton height={21} />
-                        <Skeleton height={21} width={100} />
-                      </>
-                    )}
-                  </p>
-                  <p>
-                    スマートフォンなどで表示するか、印刷してお持ちください。
-                  </p>
-                </Grid>
-              </Grid>
-            </div>
-          </>
-        )}
+        </div>
+        <div className={classes.ticketBody}>
+          <Grid container spacing={2}>
+            <Grid item xs={6}>
+              <QRCode data={rsvId} className={classes.qrCode} />
+              <span className={clsx(classes.rsvId, "monospace")}>{rsvId}</span>
+            </Grid>
+            <Grid item xs={6}>
+              <p>
+                {rsv ? (
+                  `上記の日時・時間に、${rsv.member_all} 名までご入場いただけます。`
+                ) : (
+                  <>
+                    <Skeleton height={21} />
+                    <Skeleton height={21} />
+                    <Skeleton height={21} width={100} />
+                  </>
+                )}
+              </p>
+              <p>スマートフォンなどで表示するか、印刷してお持ちください。</p>
+            </Grid>
+          </Grid>
+        </div>
       </div>
     </div>
   );
