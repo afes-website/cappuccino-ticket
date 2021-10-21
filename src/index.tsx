@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "App";
+import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import "assets/main.scss";
 import Axios from "axios";
 
@@ -12,3 +13,12 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById("root")
 );
+
+serviceWorkerRegistration.register({
+  onUpdate: (registration) => {
+    if (registration.waiting) {
+      registration.waiting?.postMessage({ type: "SKIP_WAITING" });
+      window.location.reload();
+    }
+  },
+});
