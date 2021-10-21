@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { makeStyles } from "@material-ui/core";
-import { ReactComponent as Logo } from "assets/logo.svg";
 import Ticket from "components/Ticket";
 
 const useStyles = makeStyles({
@@ -9,29 +8,12 @@ const useStyles = makeStyles({
     height: "100%",
     boxSizing: "border-box",
   },
-  title: {
-    display: "flex",
-    justifyContent: "center",
-    flexDirection: "column",
-    marginBottom: 32,
-  },
-  logo: {
-    height: 48,
-  },
-  subtitle: {
-    display: "block",
-    textAlign: "center",
-    fontSize: 14,
-    fontWeight: 700,
-    color: "#555",
-    marginTop: 4,
-  },
   copy: {
     display: "block",
     textAlign: "center",
     fontSize: 12,
     color: "#888",
-    marginTop: 32,
+    marginTop: 16,
   },
   rsvIdNotSet: {
     textAlign: "center",
@@ -73,10 +55,6 @@ const App: React.VFC = () => {
 
   return (
     <div className={classes.root}>
-      <div className={classes.title}>
-        <Logo className={classes.logo} />
-        <span className={classes.subtitle}>デジタルチケット</span>
-      </div>
       <Ticket rsvId={rsvId} />
       <span className={classes.copy}>
         © 2021 麻布学園第74回文化祭実行委員会

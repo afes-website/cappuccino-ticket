@@ -145,21 +145,20 @@ const Ticket: React.VFC<Props> = ({ rsvId, className }) => {
           </div>
         </div>
         <div className={classes.ticketBody}>
-          <Grid container spacing={2}>
-            <Grid item xs={6}>
-              <QRCode data={rsvId} className={classes.qrCode} />
+          <Grid container spacing={2} justifyContent="center">
+            <Grid item xs={10}>
+              <QRCode
+                data={`${rsvId};${btoa(JSON.stringify(rsv))}`}
+                className={classes.qrCode}
+              />
               <span className={clsx(classes.rsvId, "monospace")}>{rsvId}</span>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12}>
               <p>
                 {rsv ? (
-                  `上記の日時・時間に、${rsv.member_all} 名までご入場いただけます。`
+                  `上記の日時に、${rsv.member_all} 名までご入場いただけます。`
                 ) : (
-                  <>
-                    <Skeleton height={21} />
-                    <Skeleton height={21} />
-                    <Skeleton height={21} width={100} />
-                  </>
+                  <Skeleton height={21} />
                 )}
               </p>
               <p>スマートフォンなどで表示するか、印刷してお持ちください。</p>

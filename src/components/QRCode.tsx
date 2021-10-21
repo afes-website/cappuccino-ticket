@@ -2,12 +2,24 @@ import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core";
 import qrcode from "qrcode";
 import clsx from "clsx";
+import { Skeleton } from "@material-ui/lab";
 
 const useStyles = makeStyles({
   root: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    aspectRatio: "1 / 1",
+  },
+  skeletonWrapper: {
+    width: "100%",
+    height: "100%",
+    boxSizing: "border-box",
+    padding: "5%",
+  },
+  skeleton: {
+    width: "100%",
+    height: "100%",
   },
 });
 
@@ -25,8 +37,8 @@ const QRCode: React.VFC<Props> = ({ data, className }) => {
     qrcode.toDataURL(
       data,
       {
-        errorCorrectionLevel: "high",
-        scale: 15,
+        errorCorrectionLevel: "Q",
+        scale: 20,
       },
       (e, url) => {
         setDataUrl(url);
@@ -36,7 +48,13 @@ const QRCode: React.VFC<Props> = ({ data, className }) => {
 
   return (
     <div className={clsx(classes.root, className)}>
-      {dataUrl && <img src={dataUrl} alt={data} width="100%" height="auto" />}
+      {dataUrl ? (
+        <img src={dataUrl} alt={data} width="100%" height="auto" />
+      ) : (
+        <div className={classes.skeletonWrapper}>
+          <Skeleton variant="rect" className={classes.skeleton} />
+        </div>
+      )}
     </div>
   );
 };
