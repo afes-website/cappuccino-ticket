@@ -5,6 +5,8 @@ import clsx from "clsx";
 import api, { Reservation } from "@afes-website/docs";
 import aspida from "@aspida/axios";
 import { ReactComponent as LogoWhite } from "assets/logo_w.svg";
+import { ReactComponent as Person } from "assets/person.svg";
+import { ReactComponent as Child } from "assets/child.svg";
 import QRCode from "components/QRCode";
 import { stringDate, stringTime } from "libs/stringDateTime";
 import termColor from "libs/termColor";
@@ -49,10 +51,12 @@ const useStyles = makeStyles({
   },
   ticketMemberAll: {
     position: "absolute",
-    fontSize: 200,
-    right: -24,
-    top: -24,
-    opacity: 0.75,
+    right: 12,
+    bottom: 20,
+    opacity: 0.8,
+    fill: "#fff",
+    width: 100,
+    height: 100,
   },
   ticketBody: {
     padding: 16,
@@ -119,7 +123,7 @@ const Ticket: React.VFC<Props> = ({ rsvId, className }) => {
         >
           <LogoWhite className={classes.ticketLogo} />
           <span className={classes.ticketMemberAll}>
-            {rsv && rsv.member_all}
+            {rsv && (rsv.member_all === 1 ? <Person /> : <Child />)}
           </span>
           <div className={classes.ticketHeaderContent}>
             <span>
