@@ -148,7 +148,7 @@ const Ticket: React.VFC<Props> = ({ rsvId, className }) => {
           <Grid container spacing={2} justifyContent="center">
             <Grid item xs={10}>
               <QRCode
-                data={`${rsvId};${btoa(JSON.stringify(rsv))}`}
+                data={`${rsvId};${JSON.stringify(rsv)}`}
                 className={classes.qrCode}
               />
               <span className={clsx(classes.rsvId, "monospace")}>{rsvId}</span>
