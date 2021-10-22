@@ -1,6 +1,6 @@
 {
   "name": "cappuccino-ticket",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "private": true,
   "scripts": {
     "start": "react-scripts start",
@@ -22,6 +22,7 @@
     "clsx": "^1.1.1",
     "moment": "^2.29.1",
     "qrcode": "^1.4.4",
+    "qs": "^6.10.1",
     "react": "^17.0.2",
     "react-app-polyfill": "^2.0.0",
     "react-dom": "^17.0.2",
@@ -32,6 +33,7 @@
   "devDependencies": {
     "@types/node": "^14.14.34",
     "@types/qrcode": "^1.4.1",
+    "@types/qs": "^6.9.7",
     "@types/react": "^17.0.11",
     "@types/react-dom": "^17.0.9",
     "@typescript-eslint/eslint-plugin": "^4.17.0",

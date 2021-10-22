@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core";
+import qs from "qs";
 import Ticket from "components/Ticket";
 
 const useStyles = makeStyles({
@@ -20,20 +21,16 @@ const useStyles = makeStyles({
   },
 });
 
-const SEARCH_PARAMS_RSV_KEY = "id";
-
 const App: React.VFC = () => {
   const classes = useStyles();
 
   const [rsvId, setRsvId] = useState<string | null>("");
 
-  const searchParams = useRef(new URLSearchParams(window.location.search));
-
   useEffect(() => {
-    const id = searchParams.current.get(SEARCH_PARAMS_RSV_KEY);
-    if (id) setRsvId(id);
+    const { id } = qs.parse(location.search.substr(1));
+    if (id && typeof id === "string") setRsvId(id);
     else setRsvId(null);
-  }, [searchParams]);
+  }, []);
 
   useEffect(() => {
     handleResize();
