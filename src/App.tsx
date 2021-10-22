@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core";
 import qs from "qs";
+import Top from "components/Top";
 import Ticket from "components/Ticket";
 
 const useStyles = makeStyles({
@@ -43,11 +44,7 @@ const App: React.VFC = () => {
   }, []);
 
   if (!rsvId) {
-    return (
-      <div className={classes.root}>
-        <p className={classes.rsvIdNotSet}>予約 ID が指定されていません。</p>
-      </div>
-    );
+    return <Top className={classes.root} />;
   }
 
   return (
