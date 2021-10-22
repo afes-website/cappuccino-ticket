@@ -97,7 +97,7 @@ const Ticket: React.VFC<Props> = ({ rsvId, className }) => {
             <Grid item xs={10}>
               <div className={classes.qrCodeWrapper}>
                 <QRCode
-                  data={`${rsvId};${JSON.stringify(rsv)}`}
+                  data={rsv ? JSON.stringify(rsv) : null}
                   className={classes.qrCode}
                   hideQR={
                     !(

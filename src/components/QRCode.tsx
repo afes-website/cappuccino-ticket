@@ -24,7 +24,7 @@ const useStyles = makeStyles({
 });
 
 export interface Props {
-  data: string;
+  data: string | null;
   className?: string;
   hideQR?: boolean;
 }
@@ -35,22 +35,23 @@ const QRCode: React.VFC<Props> = ({ data, className, hideQR }) => {
   const [dataUrl, setDataUrl] = useState<string | null>(null);
 
   useEffect(() => {
-    qrcode.toDataURL(
-      data,
-      {
-        errorCorrectionLevel: "Q",
-        scale: 20,
-      },
-      (e, url) => {
-        setDataUrl(url);
-      }
-    );
+    if (data)
+      qrcode.toDataURL(
+        data,
+        {
+          errorCorrectionLevel: "Q",
+          scale: 20,
+        },
+        (e, url) => {
+          setDataUrl(url);
+        }
+      );
   }, [data]);
 
   return (
     <div className={clsx(classes.root, className)}>
       {!hideQR && dataUrl ? (
-        <img src={dataUrl} alt={data} width="100%" height="auto" />
+        <img src={dataUrl} alt={data ?? ""} width="100%" height="auto" />
       ) : (
         <div className={classes.skeletonWrapper}>
           <Skeleton
