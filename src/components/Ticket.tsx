@@ -79,13 +79,16 @@ const Ticket: React.VFC<Props> = ({ rsvId, className }) => {
         setReservationToLS(reservation);
       })
       .catch((e) => {
-        setRsv(parseRsvId(rsvId));
-        if (axios.isAxiosError(e) && e.response?.status === 404) {
-          setReliability("NOT_FOUND");
-        } else {
-          setReliability("NETWORK_ERROR");
+        if (rsv?.id !== rsvId) {
+          setRsv(parseRsvId(rsvId));
+          if (axios.isAxiosError(e) && e.response?.status === 404) {
+            setReliability("NOT_FOUND");
+          } else {
+            setReliability("NETWORK_ERROR");
+          }
         }
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rsvId]);
 
   return (
