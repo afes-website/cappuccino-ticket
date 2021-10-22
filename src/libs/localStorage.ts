@@ -11,7 +11,7 @@ export const getReservationFromLS = (): Reservation | null => {
   return isReservation(obj) ? obj : null;
 };
 
-export const setReservationToLS = (value: Reservation): void => {
+export const setReservationToLS = (value: Reservation | null): void => {
   localStorage.setItem(RSV_LS_KEY, JSON.stringify(value));
 };
 

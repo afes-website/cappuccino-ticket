@@ -4,13 +4,11 @@ import { Skeleton } from "@material-ui/lab";
 import clsx from "clsx";
 import api, { Reservation } from "@afes-website/docs";
 import aspida from "@aspida/axios";
-import { ReactComponent as LogoWhite } from "assets/logo.svg";
-import { ReactComponent as Person } from "assets/person.svg";
-import { ReactComponent as Child } from "assets/child.svg";
+import axios from "axios";
 import QRCode from "components/QRCode";
-import { stringDate, stringTime } from "libs/stringDateTime";
-import termColor from "libs/termColor";
+import TicketHeader from "components/TicketHeader";
 import { getReservationFromLS, setReservationToLS } from "libs/localStorage";
+import parseRsvId from "libs/parseRsvId";
 
 const useStyles = makeStyles({
   root: {
@@ -22,55 +20,21 @@ const useStyles = makeStyles({
     overflow: "hidden",
     boxShadow: "0 2px 4px rgba(0, 0, 0, 0.2)",
   },
-  ticketError: {
-    background: "#fdecea",
-    color: "#611a15",
-    padding: "24px 32px",
-    "& p": {
-      fontSize: 16,
-    },
-  },
-  ticketHeader: {
-    borderRadius: "16px 16px 0 0",
-    padding: "64px 24px 24px 24px",
-    color: "#fff",
-    fontWeight: 700,
-    fontSize: 24,
-    position: "relative",
-    transition: "background 1s",
-  },
-  ticketLogo: {
-    position: "absolute",
-    top: 16,
-    left: 16,
-    height: 36,
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    "& > svg": {
-      height: 36,
-      fill: "#fff",
-    },
-    "& > span": {
-      fontSize: 16,
-      paddingLeft: 8,
-    },
-  },
-  ticketHeaderContent: {
-    display: "flex",
-    flexDirection: "column",
-  },
-  ticketMemberAll: {
-    position: "absolute",
-    right: 12,
-    bottom: 20,
-    opacity: 0.8,
-    fill: "#fff",
-    width: 100,
-    height: 100,
-  },
   ticketBody: {
     padding: 16,
+  },
+  qrCodeWrapper: {
+    position: "relative",
+    width: "100%",
+    "& > span": {
+      position: "absolute",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+      width: "70%",
+      fontWeight: 500,
+      color: "#555",
+    },
   },
   qrCode: {
     width: "100%",
@@ -82,22 +46,6 @@ const useStyles = makeStyles({
     fontSize: 14,
     marginBottom: 8,
   },
-  cutLine: {
-    position: "relative",
-    "&::after": {
-      background:
-        "radial-gradient(circle farthest-side, #d5d5d5, #d5d5d5 60%, transparent 60%, transparent);",
-      backgroundSize: "12px 12px",
-      backgroundPosition: "center",
-      content: "''",
-      display: "inline-block",
-      position: "absolute",
-      width: "100%",
-      height: 12,
-      left: 0,
-      bottom: -6,
-    },
-  },
 });
 
 export interface Props {
@@ -105,66 +53,74 @@ export interface Props {
   className?: string;
 }
 
+type Reliability = "SERVER" | "NOT_FOUND" | "NETWORK_ERROR" | "LOCAL_STORAGE";
+
 const Ticket: React.VFC<Props> = ({ rsvId, className }) => {
   const classes = useStyles();
 
   const [rsv, setRsv] = useState<Reservation | null>(getReservationFromLS());
+  const [reliability, setReliability] = useState<Reliability | null>(
+    "LOCAL_STORAGE"
+  );
 
+  useEffect(() => {
+    if (rsv?.id !== rsvId) {
+      setRsv(null);
+      setReservationToLS(null);
+    }
+  }, [rsv?.id, rsvId]);
   useEffect(() => {
     api(aspida())
       .reservations._id(rsvId)
       .check.$get()
       .then(({ reservation }) => {
         setRsv(reservation);
+        setReliability("SERVER");
         setReservationToLS(reservation);
       })
       .catch((e) => {
-        console.error(e);
+        setRsv(parseRsvId(rsvId));
+        if (axios.isAxiosError(e) && e.response?.status === 404) {
+          setReliability("NOT_FOUND");
+        } else {
+          setReliability("NETWORK_ERROR");
+        }
       });
   }, [rsvId]);
 
   return (
     <div className={clsx(classes.root, className)}>
       <div className={classes.ticket}>
-        <div
-          className={clsx(classes.ticketHeader, classes.cutLine)}
-          style={{
-            background: termColor(rsv?.term.guest_type),
-          }}
-        >
-          <div className={classes.ticketLogo}>
-            <LogoWhite />
-            <span>デジタルチケット</span>
-          </div>
-          <span className={classes.ticketMemberAll}>
-            {rsv && (rsv.member_all === 1 ? <Person /> : <Child />)}
-          </span>
-          <div className={classes.ticketHeaderContent}>
-            <span>
-              {rsv ? (
-                stringDate(rsv.term.enter_scheduled_time)
-              ) : (
-                <Skeleton width={180} height={36} />
-              )}
-            </span>
-            <span>
-              {rsv ? (
-                `${stringTime(rsv.term.enter_scheduled_time)} ～ ${stringTime(
-                  rsv.term.exit_scheduled_time
-                )}`
-              ) : (
-                <Skeleton width={180} height={36} />
-              )}
-            </span>
-          </div>
-        </div>
+        <TicketHeader rsv={rsv} />
         <div className={classes.ticketBody}>
           <Grid container spacing={2} justifyContent="center">
             <Grid item xs={10}>
-              <QRCode
-                data={`${rsvId};${JSON.stringify(rsv)}`}
-                className={classes.qrCode}
-              />
+              <div className={classes.qrCodeWrapper}>
+                <QRCode
+                  data={`${rsvId};${JSON.stringify(rsv)}`}
+                  className={classes.qrCode}
+                  hideQR={
+                    !(
+                      reliability === "SERVER" ||
+                      reliability === "LOCAL_STORAGE"
+                    )
+                  }
+                />
+                {reliability === "NETWORK_ERROR" && (
+                  <span>
+                    QRコードの生成で問題が発生しました。
+                    <br />
+                    時間を置いて再度お試しください。
+                  </span>
+                )}
+                {reliability === "NOT_FOUND" && (
+                  <span>
+                    予約が見つかりませんでした。
+                    <br />
+                    ○○までお問い合わせください。
+                  </span>
+                )}
+              </div>
               <span className={clsx(classes.rsvId, "monospace")}>{rsvId}</span>
             </Grid>
             <Grid item xs={12}>
