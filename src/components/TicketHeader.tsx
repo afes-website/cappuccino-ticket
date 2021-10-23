@@ -46,8 +46,8 @@ const useStyles = makeStyles({
     bottom: 20,
     opacity: 0.8,
     fill: "#fff",
-    width: 100,
-    height: 100,
+    width: 80,
+    height: 80,
   },
   cutLine: {
     position: "relative",
@@ -83,7 +83,10 @@ const TicketHeader: React.VFC<Props> = ({ rsv }) => {
     >
       <div className={classes.ticketLogo}>
         <LogoWhite />
-        <span>デジタルチケット</span>
+        <span>
+          デジタルチケット
+          {rsv && { 1: "（一般枠）", 2: "（児童枠）" }[rsv.member_all]}
+        </span>
       </div>
       <span className={classes.ticketMemberAll}>
         {rsv && (rsv.member_all === 1 ? <Person /> : <Child />)}
