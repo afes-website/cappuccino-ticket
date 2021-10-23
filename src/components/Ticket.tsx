@@ -129,7 +129,10 @@ const Ticket: React.VFC<Props> = ({ rsvId, className }) => {
             <Grid item xs={12}>
               <p>
                 {rsv ? (
-                  `上記の日時に、${rsv.member_all} 名までご入場いただけます。`
+                  `上記の日時に、${
+                    { 1: 1, 2: "小学生とその保護者の計 2" }[rsv.member_all] ??
+                    rsv.member_all
+                  } 名までご入場いただけます。`
                 ) : (
                   <Skeleton height={21} />
                 )}
