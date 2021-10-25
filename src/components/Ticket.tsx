@@ -120,7 +120,7 @@ const Ticket: React.VFC<Props> = ({ rsvId, className }) => {
                   <span>
                     予約が見つかりませんでした。
                     <br />
-                    ○○までお問い合わせください。
+                    恐れ入りますが、担当までお問い合わせください。
                   </span>
                 )}
               </div>
