@@ -5,7 +5,6 @@ import {
   yellow,
   green,
   purple,
-  orange,
   grey,
 } from "@material-ui/core/colors";
 
@@ -24,10 +23,8 @@ const termColor = (prefix: GuestType | undefined): string => {
       return yellow[i];
     case "GuestGreen":
       return green[i];
-    case "GuestPurple":
+    case "ParentPurple":
       return purple[i];
-    case "GuestOrange":
-      return orange[i];
     case "GuestWhite":
       return grey[i];
     case "StudentGray":
