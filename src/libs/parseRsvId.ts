@@ -22,6 +22,7 @@ const getTerm = (id: string): Term =>
         enter_scheduled_time: "2021-11-13T09:00:00+09:00",
         exit_scheduled_time: "2021-11-14T15:30:00+09:00",
         guest_type: "GuestWhite",
+        class: "General",
       };
 
 const terms: { [termId: string]: Term } = {
@@ -30,72 +31,84 @@ const terms: { [termId: string]: Term } = {
     enter_scheduled_time: "2021-11-13T09:00:00+09:00",
     exit_scheduled_time: "2021-11-13T11:00:00+09:00",
     guest_type: "GuestBlue",
+    class: "General",
   },
   "Day1-Term2": {
     id: "Day1-Term2",
     enter_scheduled_time: "2021-11-13T09:30:00+09:00",
     exit_scheduled_time: "2021-11-13T11:30:00+09:00",
     guest_type: "GuestRed",
+    class: "General",
   },
   "Day1-Term3": {
     id: "Day1-Term3",
     enter_scheduled_time: "2021-11-13T10:00:00+09:00",
     exit_scheduled_time: "2021-11-13T12:00:00+09:00",
     guest_type: "GuestYellow",
+    class: "General",
   },
   "Day1-Term4": {
     id: "Day1-Term4",
     enter_scheduled_time: "2021-11-13T12:30:00+09:00",
     exit_scheduled_time: "2021-11-13T14:30:00+09:00",
     guest_type: "GuestBlue",
+    class: "General",
   },
   "Day1-Term5": {
     id: "Day1-Term5",
     enter_scheduled_time: "2021-11-13T13:00:00+09:00",
     exit_scheduled_time: "2021-11-13T15:00:00+09:00",
     guest_type: "GuestRed",
+    class: "General",
   },
   "Day1-Term6": {
     id: "Day1-Term6",
     enter_scheduled_time: "2021-11-13T13:30:00+09:00",
     exit_scheduled_time: "2021-11-13T15:30:00+09:00",
     guest_type: "GuestYellow",
+    class: "General",
   },
   "Day2-Term1": {
     id: "Day2-Term1",
     enter_scheduled_time: "2021-11-14T09:00:00+09:00",
     exit_scheduled_time: "2021-11-14T11:00:00+09:00",
     guest_type: "GuestBlue",
+    class: "General",
   },
   "Day2-Term2": {
     id: "Day2-Term2",
     enter_scheduled_time: "2021-11-14T09:30:00+09:00",
     exit_scheduled_time: "2021-11-14T11:30:00+09:00",
     guest_type: "GuestRed",
+    class: "General",
   },
   "Day2-Term3": {
     id: "Day2-Term3",
     enter_scheduled_time: "2021-11-14T10:00:00+09:00",
     exit_scheduled_time: "2021-11-14T12:00:00+09:00",
     guest_type: "GuestYellow",
+    class: "General",
   },
   "Day2-Term4": {
     id: "Day2-Term4",
     enter_scheduled_time: "2021-11-14T12:30:00+09:00",
     exit_scheduled_time: "2021-11-14T14:30:00+09:00",
     guest_type: "GuestBlue",
+    class: "General",
   },
   "Day2-Term5": {
     id: "Day2-Term5",
     enter_scheduled_time: "2021-11-14T13:00:00+09:00",
     exit_scheduled_time: "2021-11-14T15:00:00+09:00",
     guest_type: "GuestRed",
+    class: "General",
   },
   "Day2-Term6": {
     id: "Day2-Term6",
     enter_scheduled_time: "2021-11-14T13:30:00+09:00",
     exit_scheduled_time: "2021-11-14T15:30:00+09:00",
     guest_type: "GuestYellow",
+    class: "General",
   },
 };
 

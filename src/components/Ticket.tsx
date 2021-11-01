@@ -72,8 +72,8 @@ const Ticket: React.VFC<Props> = ({ rsvId, className }) => {
   useEffect(() => {
     api(aspida())
       .reservations._id(rsvId)
-      .check.$get()
-      .then(({ reservation }) => {
+      .$get()
+      .then((reservation) => {
         setRsv(reservation);
         setReliability("SERVER");
         setReservationToLS(reservation);
